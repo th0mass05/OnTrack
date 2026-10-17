@@ -1,11 +1,26 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
-import "bootstrap-icons/font/bootstrap-icons.css";
+import { ToastProvider } from "./components/Toast.tsx";
+import "./index.css";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    // Refetch when the app comes back to the foreground so housemates' changes show up.
+    queries: { refetchOnWindowFocus: true, staleTime: 15_000, retry: 1 },
+  },
+});
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
-  </StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <ToastProvider>
+          <App />
+        </ToastProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
+  </StrictMode>,
 );
