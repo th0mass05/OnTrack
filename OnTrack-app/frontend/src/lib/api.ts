@@ -145,8 +145,7 @@ export function getActivity(limit = 30) {
   return delay(db.activity.slice(0, limit));
 }
 
-// Not in the contract yet: the add-chore sheet needs the house's members for the assignee picker.
-// The backend could add GET /houses/members, or include members in GET /me.
-export function getHousemates(): Promise<User[]> {
+export function getHousemates() {
+  if (!USE_MOCKS) return request<User[]>("/houses/members");
   return delay(users);
 }

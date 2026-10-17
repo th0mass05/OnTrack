@@ -23,3 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 .venv
+
+# Backend
+__pycache__/
+*.db
+*.db-shm
+*.db-wal
